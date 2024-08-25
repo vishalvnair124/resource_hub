@@ -65,17 +65,15 @@ class _TopicDetailScreenState extends State<TopicDetailScreen> {
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    ...resources
-                        .map((resource) => ListTile(
-                              title: Text(
-                                  resource.link), // Display the resource link
-                              //   subtitle: Text('Type: ${resource.type}'),
-                              onTap: () {
-                                // Handle resource tap
-                                // You can use a launch function to open URLs
-                              },
-                            ))
-                        .toList(),
+                    ...resources.map((resource) => ListTile(
+                          title:
+                              Text(resource.link), // Display the resource link
+                          //   subtitle: Text('Type: ${resource.type}'),
+                          onTap: () {
+                            // Handle resource tap
+                            // You can use a launch function to open URLs
+                          },
+                        )),
                   ],
                 );
               }).toList(),

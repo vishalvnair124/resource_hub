@@ -34,7 +34,7 @@ class _CourseListScreenState extends State<CourseListScreen> {
         ),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -88,7 +88,7 @@ class _CourseListScreenState extends State<CourseListScreen> {
                           Container(
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.black),
-                              color: Color.fromARGB(255, 33, 149, 243),
+                              color: const Color.fromARGB(255, 33, 149, 243),
                               borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(50),
                                 bottomRight: Radius.circular(50),

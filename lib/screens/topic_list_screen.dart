@@ -1,6 +1,8 @@
 // lib/screens/topic_list_screen.dart
 
 import 'package:flutter/material.dart';
+
+import 'package:resource_hub/routes/slide_transition_route.dart';
 import 'package:resource_hub/screens/topic_detail_screen.dart';
 import '../models/topic.dart';
 import '../services/api_service.dart';
@@ -49,10 +51,10 @@ class _TopicListScreenState extends State<TopicListScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TopicDetailScreen(
+                      // Navigating to TopicDetailScreen with slide transition
+                      Navigator.of(context).push(
+                        SlideTransitionRoute(
+                          page: TopicDetailScreen(
                             topicId: topic.topicId,
                             topicName: topic.name,
                           ),

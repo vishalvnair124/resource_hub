@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resource_hub/routes/scale_transition_route.dart';
 import 'package:resource_hub/screens/topic_list_screen.dart';
 import '../models/module.dart';
 import '../services/api_service.dart';
@@ -48,10 +49,8 @@ class _ModuleListScreenState extends State<ModuleListScreen> {
                   child: GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              TopicListScreen(moduleId: module.id),
-                        ),
+                        ScaleTransitionRoute(
+                            page: TopicListScreen(moduleId: module.id)),
                       );
                     },
                     child: Container(

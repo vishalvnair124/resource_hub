@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'package:resource_hub/routes/zoom_transition_route.dart';
 import 'package:resource_hub/screens/topic_detail_screen.dart';
 import '../services/api_service.dart';
 import '../models/search_result.dart';
@@ -119,7 +121,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 final topics = result.topics;
 
                                 // Define consistent background color for the ListTile
-                                final tileColor = Colors.white;
+                                const tileColor = Colors.white;
 
                                 // Define border radius for single topic tiles
                                 final borderRadius = BorderRadius.circular(8.0);
@@ -128,7 +130,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                 if (topics.length == 1) {
                                   final topic = topics[0];
                                   return Card(
-                                    margin: EdgeInsets.symmetric(vertical: 4.0),
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 4.0),
                                     child: Container(
                                       decoration: BoxDecoration(
                                         color: tileColor,
@@ -137,11 +140,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                       child: ListTile(
                                         title: Text(topic.name),
                                         onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  TopicDetailScreen(
+                                          Navigator.of(context).push(
+                                            ZoomTransitionRoute(
+                                              page: TopicDetailScreen(
                                                 topicId: topic.id,
                                                 topicName: topic.name,
                                               ),
@@ -155,7 +156,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
                                 // If there are multiple topics, use ExpansionTile
                                 return Card(
-                                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 4.0),
                                   child: ExpansionTile(
                                     title: Text(result.moduleName),
                                     subtitle: Text(result.courseName),
@@ -163,11 +165,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                       return ListTile(
                                         title: Text(topic.name),
                                         onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  TopicDetailScreen(
+                                          Navigator.of(context).push(
+                                            ZoomTransitionRoute(
+                                              page: TopicDetailScreen(
                                                 topicId: topic.id,
                                                 topicName: topic.name,
                                               ),
