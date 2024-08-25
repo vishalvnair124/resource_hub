@@ -116,54 +116,68 @@ class _SearchScreenState extends State<SearchScreen> {
                               itemCount: _searchResults.length,
                               itemBuilder: (context, index) {
                                 final result = _searchResults[index];
+                                final topics = result.topics;
 
-                                // Check if the module has only one topic
-                                if (result.topics.length == 1) {
-                                  final singleTopic = result.topics.first;
+                                // Define consistent background color for the ListTile
+                                final tileColor = Colors.white;
+
+                                // Define border radius for single topic tiles
+                                final borderRadius = BorderRadius.circular(8.0);
+
+                                // If a module contains only one topic, show that topic directly
+                                if (topics.length == 1) {
+                                  final topic = topics[0];
                                   return Card(
-                                    child: ListTile(
-                                      title: Text(singleTopic.name),
-                                      subtitle: Text(result.courseName),
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                TopicDetailScreen(
-                                              topicId: singleTopic.id,
-                                              topicName: singleTopic.name,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  );
-                                } else {
-                                  // Display the module with an ExpansionTile if there are multiple topics
-                                  return Card(
-                                    child: ExpansionTile(
-                                      title: Text(result.moduleName),
-                                      subtitle: Text(result.courseName),
-                                      children: result.topics.map((topic) {
-                                        return ListTile(
-                                          title: Text(topic.name),
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    TopicDetailScreen(
-                                                  topicId: topic.id,
-                                                  topicName: topic.name,
-                                                ),
+                                    margin: EdgeInsets.symmetric(vertical: 4.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: tileColor,
+                                        borderRadius: borderRadius,
+                                      ),
+                                      child: ListTile(
+                                        title: Text(topic.name),
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  TopicDetailScreen(
+                                                topicId: topic.id,
+                                                topicName: topic.name,
                                               ),
-                                            );
-                                          },
-                                        );
-                                      }).toList(),
+                                            ),
+                                          );
+                                        },
+                                      ),
                                     ),
                                   );
                                 }
+
+                                // If there are multiple topics, use ExpansionTile
+                                return Card(
+                                  margin: EdgeInsets.symmetric(vertical: 4.0),
+                                  child: ExpansionTile(
+                                    title: Text(result.moduleName),
+                                    subtitle: Text(result.courseName),
+                                    children: topics.map((topic) {
+                                      return ListTile(
+                                        title: Text(topic.name),
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  TopicDetailScreen(
+                                                topicId: topic.id,
+                                                topicName: topic.name,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    }).toList(),
+                                  ),
+                                );
                               },
                             ),
                           )
