@@ -1,5 +1,5 @@
 class SubjectTopic {
-  final String id;
+  final int id;
   final String name;
 
   SubjectTopic({
@@ -9,7 +9,7 @@ class SubjectTopic {
 
   factory SubjectTopic.fromJson(Map<String, dynamic> json) {
     return SubjectTopic(
-      id: json['topic_id'],
+      id: int.tryParse(json['topic_id'].toString()) ?? 0,
       name: json['topic_name'],
     );
   }

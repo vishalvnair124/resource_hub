@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resource_hub/screens/topic_detail_screen.dart';
 import '../services/api_service.dart';
 import '../models/search_result.dart';
 
@@ -13,6 +14,7 @@ class _SearchScreenState extends State<SearchScreen> {
   List<SearchResult> _searchResults = [];
   bool _isLoading = false;
   String _error = '';
+  bool _noResultsFound = false;
 
   void _performSearch() async {
     final searchTerm = _searchController.text.trim();
@@ -21,12 +23,14 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       _isLoading = true;
       _error = '';
+      _noResultsFound = false;
     });
 
     try {
       final results = await _apiService.searchTopics(searchTerm);
       setState(() {
         _searchResults = results;
+        _noResultsFound = results.isEmpty;
       });
     } catch (e) {
       setState(() {
@@ -102,28 +106,67 @@ class _SearchScreenState extends State<SearchScreen> {
                 ? const CircularProgressIndicator()
                 : _error.isNotEmpty
                     ? Text(_error, style: const TextStyle(color: Colors.red))
-                    : Expanded(
-                        child: ListView.builder(
-                          itemCount: _searchResults.length,
-                          itemBuilder: (context, index) {
-                            final result = _searchResults[index];
-                            return Card(
-                              child: ExpansionTile(
-                                title: Text(result.moduleName),
-                                subtitle: Text(result.courseName),
-                                children: result.topics.map((topic) {
-                                  return ListTile(
-                                    title: Text(topic.name),
-                                    onTap: () {
-                                      // Handle topic tap if needed
-                                    },
+                    : _noResultsFound
+                        ? const Text(
+                            'No results found',
+                            style: TextStyle(fontSize: 18),
+                          )
+                        : Expanded(
+                            child: ListView.builder(
+                              itemCount: _searchResults.length,
+                              itemBuilder: (context, index) {
+                                final result = _searchResults[index];
+
+                                // Check if the module has only one topic
+                                if (result.topics.length == 1) {
+                                  final singleTopic = result.topics.first;
+                                  return Card(
+                                    child: ListTile(
+                                      title: Text(singleTopic.name),
+                                      subtitle: Text(result.courseName),
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                TopicDetailScreen(
+                                              topicId: singleTopic.id,
+                                              topicName: singleTopic.name,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
                                   );
-                                }).toList(),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                                } else {
+                                  // Display the module with an ExpansionTile if there are multiple topics
+                                  return Card(
+                                    child: ExpansionTile(
+                                      title: Text(result.moduleName),
+                                      subtitle: Text(result.courseName),
+                                      children: result.topics.map((topic) {
+                                        return ListTile(
+                                          title: Text(topic.name),
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TopicDetailScreen(
+                                                  topicId: topic.id,
+                                                  topicName: topic.name,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      }).toList(),
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                          )
           ],
         ),
       ),
