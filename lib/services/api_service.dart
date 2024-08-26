@@ -10,8 +10,8 @@ import '../models/topic.dart';
 class ApiService {
   final Dio _dio = Dio(
     BaseOptions(
-      baseUrl:
-          'http://10.0.2.2/resourcehub/api/', // Update to match your actual base URL
+      baseUrl: 'http://10.0.2.2/resourcehub/api/',
+      // 'http://127.0.0.1/resourcehub/api/',
     ),
   );
 

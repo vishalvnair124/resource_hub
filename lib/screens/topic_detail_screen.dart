@@ -1,5 +1,4 @@
-// lib/screens/topic_detail_screen.dart
-
+import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/material.dart';
 import '../models/resource.dart';
 import '../services/api_service.dart';
@@ -65,15 +64,36 @@ class _TopicDetailScreenState extends State<TopicDetailScreen> {
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    ...resources.map((resource) => ListTile(
-                          title:
-                              Text(resource.link), // Display the resource link
-                          //   subtitle: Text('Type: ${resource.type}'),
-                          onTap: () {
-                            // Handle resource tap
-                            // You can use a launch function to open URLs
-                          },
-                        )),
+                    ...resources.map((resource) {
+                      if (resource.link.isNotEmpty) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AnyLinkPreview(
+                              link: resource.link,
+                              showMultimedia: true,
+                              onTap: () {},
+                              titleStyle: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                            ListTile(
+                              title: Text(resource.link),
+                              onTap: () {
+                                // Handle resource tap
+                                // You can use a launch function to open URLs
+                              },
+                            ),
+                            const Divider(), // Adds a divider between resources
+                          ],
+                        );
+                      } else {
+                        return SizedBox
+                            .shrink(); // Handle empty links gracefully
+                      }
+                    }).toList(),
                   ],
                 );
               }).toList(),
