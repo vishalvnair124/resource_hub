@@ -89,20 +89,17 @@ class _CourseListScreenState extends State<CourseListScreen> {
                             ),
                           ),
                           isLargeScreen
-                              ? GridView.builder(
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount:
-                                        3, // Number of columns on larger screens
-                                    childAspectRatio: 3 /
-                                        2, // Adjust the aspect ratio as needed
+                              ? SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: semesterCourses.map((course) {
+                                      return SizedBox(
+                                        width: constraints.maxWidth *
+                                            0.3, // Adjust width as needed
+                                        child: courseCard(course),
+                                      );
+                                    }).toList(),
                                   ),
-                                  itemCount: semesterCourses.length,
-                                  itemBuilder: (context, index) {
-                                    return courseCard(semesterCourses[index]);
-                                  },
                                 )
                               : ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
