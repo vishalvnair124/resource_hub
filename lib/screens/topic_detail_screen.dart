@@ -1,4 +1,3 @@
-import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/material.dart';
 import '../models/resource.dart';
 import '../services/api_service.dart';
@@ -69,16 +68,6 @@ class _TopicDetailScreenState extends State<TopicDetailScreen> {
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            AnyLinkPreview(
-                              link: resource.link,
-                              showMultimedia: true,
-                              onTap: () {},
-                              titleStyle: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                            ),
                             ListTile(
                               title: Text(resource.link),
                               onTap: () {

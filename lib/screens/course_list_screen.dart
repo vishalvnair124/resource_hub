@@ -141,13 +141,15 @@ class _CourseListScreenState extends State<CourseListScreen> {
               ),
               fit: BoxFit.cover,
               onError: (_, __) {
-                print('Image not loaded');
+                //   print('Image not loaded');
               },
             ),
             border: Border.all(color: Colors.black),
             borderRadius: BorderRadius.circular(50),
           ),
-          height: MediaQuery.of(context).size.height * 0.275,
+          height: (MediaQuery.of(context).size.width < 600)
+              ? MediaQuery.of(context).size.height * 0.275
+              : MediaQuery.of(context).size.height * 0.35,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

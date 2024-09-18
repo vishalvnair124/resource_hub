@@ -61,14 +61,18 @@ class _SearchScreenState extends State<SearchScreen> {
                   controller: _searchController,
                   decoration: const InputDecoration(
                     labelText: 'Search',
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                    ),
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Colors.blue), // Border color when not focused
+                          color: Color.fromARGB(255, 21, 153,
+                              247)), // Border color when not focused
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Colors.blue,
+                          color: Color.fromARGB(255, 0, 0, 0),
                           width: 2.0), // Border color when focused
                     ),
                     fillColor: Colors.white, // Background fill color
